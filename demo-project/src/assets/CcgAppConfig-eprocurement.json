@@ -1,0 +1,5 @@
+{
+  "baseAPIUrl": "http://localhost:7070/",
+  "ReportsAPIUrl": "http://localhost:5555/api/Reports",
+  "baseAPIUrlHub": "http://localhost:8000/"
+}

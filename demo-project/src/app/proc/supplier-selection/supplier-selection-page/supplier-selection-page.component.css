@@ -1,0 +1,12 @@
+::ng-deep .left-contents {
+    width: 450px;
+    padding: 0 10px 10px;
+}
+
+::ng-deep .right-contents {
+    position: absolute;
+    right: 0;
+    width: auto;
+    left: 455px;
+    top: 10px;
+}

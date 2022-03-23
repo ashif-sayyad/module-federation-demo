@@ -1,0 +1,81 @@
+<div style="padding:0">
+  <dx-form labelLocation="left" colCount="1">
+    <dxi-item itemType="group">
+      <dx-tab-panel [animationEnabled]="true" [focusStateEnabled]="false" height="100%">
+        <dxi-item text="Responsiveness" icon="bulletlist" title="Responsiveness">
+          <dx-data-grid [dataSource]="datasource" height="100%" [columnAutoWidth]="true" [showColumnLines]="false"
+            (onToolbarPreparing)="onToolbarPreparing($event)" [(selectedRowKeys)]="selectedRecords" (onRowDblClick)="editRecord()"
+            [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false">
+            <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel>
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxi-column caption="ID" dataField="ID" [visible]="false"></dxi-column>
+                  <dxi-column caption="Description" dataField="cDescription"></dxi-column>
+                  <dxi-column caption="Mandatory" dataField="bMandatory"></dxi-column>
+                  <dxi-column caption="Created By" dataField="CreatedByUser"></dxi-column>
+                  <dxi-column caption="Created By ID" dataField="iCreatedBy" [visible]="false"></dxi-column>
+                  <dxi-column caption="Modified By ID" dataField="iLastModifiedBy" [visible]="false"></dxi-column>
+                <dxi-column caption="Date Created" dataField="dDateCreated" dataType="date" format="dd/MM/yyyy"></dxi-column>
+                <dxi-column caption="Date Last Modified" dataField="dDateLastModified" dataType="date" format="dd/MM/yyyy"></dxi-column>
+                <dxi-column caption="Last Modified By" dataField="ModifiedByUser"></dxi-column>
+                <dxi-column caption="Default Question" dataField="bIsDefault"></dxi-column>
+                <dxi-column caption="Options" type="buttons">
+                  <dxi-button hint="Create New" icon="plus" [onClick]="newRecord">
+                  </dxi-button>
+                  <dxi-button hint="Update Existing" icon="edit" [onClick]="inlineEdit">
+                  </dxi-button>
+                  <dxi-button hint="Remove" icon="trash" [onClick]="inlineDelete">
+                  </dxi-button>
+                </dxi-column>
+                  <dxo-filter-row [visible]="true"></dxo-filter-row>
+                  <dxo-selection mode="single"></dxo-selection>
+                  <dxo-export [enabled]="true" fileName="Responsiveness"></dxo-export>
+                  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20,50, 100]" [showInfo]="false">
+                  </dxo-pager>
+        </dx-data-grid>
+        </dxi-item>
+      </dx-tab-panel>
+    </dxi-item>
+  </dx-form>
+</div>
+
+<dx-popup width="650" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+  [(visible)]="isNewResponsivenessPopupVisible" title="Responsiveness">
+  <div style="padding:5px">
+    <dx-form labelLocation="left" [formData]="newResponsivenessRecord">
+      <dxi-item itemType="group" caption="New Entry">
+        <dxi-item dataField="cDescription" [label]="{text:'Description'}" editorType="dxTextArea">
+          <dxi-validation-rule type="required" message="Description is required">
+          </dxi-validation-rule>
+        </dxi-item>
+          <dxi-item dataField="bMandatory" [label]="{text:'Is Mandatory'}" editorType="dxCheckBox">
+              <dxi-validation-rule type="required" message="Is Mandatory is a required field">
+              </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item dataField="bIsDefault" [label]="{text:'Is Default'}" editorType="dxCheckBox"></dxi-item>
+      </dxi-item>
+    </dx-form>
+    <hr style="border-top: 1px solid #ccc; background: transparent;">
+    <dx-toolbar style="margin-top:5px">
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="addNewSaveClick()" type="default" icon="save" width="150" height="25" text="Save">
+        </dx-button>
+      </dxi-item>
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="addNewCloseClick()" type="default" icon="close" width="150" height="25" text="Close">
+        </dx-button>
+      </dxi-item>
+    </dx-toolbar>
+  </div>
+</dx-popup>
+
+
+<app-message-dialog></app-message-dialog>
+<app-confirm-dialog (confirmClick)= 'ConfirmYesClick()'></app-confirm-dialog>
+
+<dx-load-panel
+    [(visible)]="loadingVisible"
+    [showIndicator]="true"
+    [showPane]="true"
+    shadingColor="rgba(43,67,50,0.4)"
+    [shading]="true">
+</dx-load-panel>

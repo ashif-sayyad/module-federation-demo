@@ -1,0 +1,96 @@
+<div style="padding:0">
+    <dx-form labelLocation="left">
+      <dxi-item itemType="group">
+        <dx-tab-panel [animationEnabled]="true" [focusStateEnabled]="false" style="position:absolute;top:0;bottom:0;left:0;bottom:0;">
+          <dxi-item text="Accounts Commodity Access" icon="bulletlist" title="Accounts Commodity Access">
+              <div class="left-contents">
+                <dx-data-grid [dataSource]="datasourceAccounts" [columnAutoWidth]="true" [showColumnLines]="false"
+                  [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false" 
+                  (onToolbarPreparing)="onToolbarPreparingAccounts($event)" [(selectedRowKeys)]="selectedAccountRecords"
+                  (onRowClick)="refreshGrid()">
+                  <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel>
+                  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                  <dxi-column caption="AccountLink" dataField="AccountLink" [visible]="false"></dxi-column>
+                  <dxi-column caption="Account" dataField="Master_Sub_Account"></dxi-column>
+                  <dxi-column caption="Description" dataField="Description"></dxi-column>
+                  <dxo-export [enabled]="true" fileName="Accounts"></dxo-export>
+                  <dxo-filter-row [visible]="true"></dxo-filter-row>
+                  <dxo-selection mode="single"></dxo-selection>
+                  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 50, 100, 1000]" [showInfo]="false">
+                  </dxo-pager>
+                </dx-data-grid>
+              </div>
+              <div class="right-contents">
+                <dx-data-grid [dataSource]="datasourceCommLink" height="100%" [columnAutoWidth]="true" [showColumnLines]="false"
+                  [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false" 
+                  (onToolbarPreparing)="onToolbarPreparing($event)" [(selectedRowKeys)]="selectedCommLinkRecords"
+                   >
+                   <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel>
+                  <dxi-column caption="ID" dataField="ID" [visible]="false"></dxi-column>
+                  <dxi-column caption="Name" dataField="cName"></dxi-column>
+                  <dxi-column caption="Description" dataField="cDescription"></dxi-column>
+                  <dxi-column caption="Options" type="buttons">
+                    <dxi-button hint="Assign" icon="plus" [onClick]="AssignInline">
+                    </dxi-button>
+                    <dxi-button hint="Remove" icon="clear" [onClick]="RemoveInline">
+                    </dxi-button>
+                  </dxi-column>
+                  <dxo-export [enabled]="true" fileName="Commodities"></dxo-export>
+                  <dxo-filter-row [visible]="true"></dxo-filter-row>
+                  <dxo-selection mode="single"></dxo-selection>
+                  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10,20,50]" [showInfo]="false">
+                  </dxo-pager>
+                </dx-data-grid>
+              </div>
+          </dxi-item>
+        </dx-tab-panel>
+      </dxi-item>
+    </dx-form>
+  </div>
+  
+  <dx-popup width="650" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+    [(visible)]="isCommodidtiesPopupVisible" title="Link Commodities">
+    <div style="padding:5px">
+      <dx-form labelLocation="left">
+        <dxi-item itemType="group">
+          <dx-data-grid [dataSource]="datasourceCommodities" height="50vh" [columnAutoWidth]="true" [showColumnLines]="false"
+          [(selectedRowKeys)]="selectedCommRecords" (onToolbarPreparing)="onToolbarPreparingLinkComms($event)"
+          [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false">
+          <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel>
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-sorting mode="multiple"></dxo-sorting>
+                <dxi-column caption="ID" dataField="ID" [visible]="false"></dxi-column>
+                <dxi-column caption="Name" dataField="cName"></dxi-column>
+                <dxi-column caption="Description" dataField="cDescription"></dxi-column>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-selection mode="multiple"></dxo-selection>
+                <dxo-export [enabled]="true" fileName="Commodities"></dxo-export>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20,50, 100]" [showInfo]="false">
+                </dxo-pager>
+          </dx-data-grid>
+        </dxi-item>
+      </dx-form>
+      <hr style="border-top: 1px solid #ccc; background: transparent;">
+      <dx-toolbar style="margin-top:5px">
+        <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+          <dx-button (click)="CommoditiesAddClick()" type="default" icon="plus" width="150" height="25" text="Add">
+          </dx-button>
+        </dxi-item>
+        <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+          <dx-button (click)="CommoditiesCloseClick()" type="default" icon="close" width="150" height="25" text="Close">
+          </dx-button>
+        </dxi-item>
+      </dx-toolbar>
+    </div>
+  </dx-popup>
+  
+  <app-message-dialog></app-message-dialog>
+  
+  <dx-load-panel
+      [(visible)]="loadingVisible"
+      [showIndicator]="true"
+      [showPane]="true"
+      shadingColor="rgba(43,67,50,0.4)"
+      [shading]="true">
+  </dx-load-panel>

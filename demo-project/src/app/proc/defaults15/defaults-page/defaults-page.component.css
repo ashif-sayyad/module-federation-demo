@@ -1,0 +1,41 @@
+::ng-deep .container {
+    position: absolute;
+}
+
+::ng-deep .left-contents {
+    width: 450px;
+    padding: 0 10px 10px;
+}
+
+::ng-deep .right-contents {
+    position: absolute;
+    right: 0;
+    left: 455px;
+    top: 20px;
+    padding-left: 15px;
+    padding-right: 20px;
+}
+
+::ng-deep .dx-htmleditor-content img {
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+::ng-deep .dx-htmleditor-content table {
+    width: 50%;
+}
+
+::ng-deep .options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+    margin-top: 20px;
+}
+
+::ng-deep .caption {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+::ng-deep .option {
+    margin-top: 10px;
+}

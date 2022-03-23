@@ -1,0 +1,831 @@
+<div style="padding:0">
+  <dx-form labelLocation="left" colCount="1">
+    <dxi-item itemType="group">
+      <dx-tab-panel [animationEnabled]="true" [focusStateEnabled]="false" height="auto">
+     
+        <dxi-item text="Defaults" icon="bulletlist" title="Defaults">
+          <dx-form labelLocation="left" width="100%" [formData]="newDefaultRecord">
+            <dxi-item itemType="tabbed" min-height="500">
+                <dxi-tab title="General">
+                  <dxi-item itemType="group" colCount="2" caption="Options">
+  
+                    <dxi-item dataField="bMSCOA" [label]="{text:'MSCOA'}" editorType="dxCheckBox"></dxi-item> 
+  
+                    <dxi-item dataField="iDefaultSupplierTax" [label]="{text:'Vat'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlTaxOptions, valueExpr:'ID', displayExpr:'cDescription',closeOnOutsideClick:true}">
+                      <dxi-validation-rule type="required" message="Evaluation Criteria is required">
+                      </dxi-validation-rule>
+                    </dxi-item>
+  
+                    <dxi-item dataField="iDefaultCurrencyID" [label]="{text:'Default Currency'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlCurrency, valueExpr:'ID', displayExpr:'cCurrencyName',closeOnOutsideClick:true}">
+                      <dxi-validation-rule type="required" message="Evaluation Criteria is required">
+                      </dxi-validation-rule>
+                    </dxi-item>
+  
+                    <dxi-item dataField="iMSCID" [label]="{text:'Set Cost Centre'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlMSC, valueExpr:'idSegmentNo', displayExpr:'cSegmentLabel',closeOnOutsideClick:true}">
+                      <dxi-validation-rule type="required" message="MSC is required">
+                      </dxi-validation-rule>
+                    </dxi-item>
+                  </dxi-item>
+                  <dxi-item itemType="group" colCount="2" caption="Commodities">
+                    <dxi-item dataField="iMaxAccountCommodities" [label]="{text:'GL accounts limit'}" editorType="dxNumberBox"></dxi-item>
+                    <dxi-item dataField="iMaxSupplierCommodities" [label]="{text:'Suppliers limit'}" editorType="dxNumberBox"></dxi-item>
+                  </dxi-item>
+                </dxi-tab>
+
+                <dxi-tab title="Purchase Order">
+                  <dxi-item itemType="group" colCount="2" caption="Numbering">
+                    <dxi-item [label]="{text:'Prefix'}">
+                      <dx-text-box
+                            dataField="cPOPrefix"
+                            [(value)]="cPOPrefix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Character'}">
+                      <dx-text-box
+                            dataField="cPOPadCharacter"
+                            [(value)]="cPOPadCharacter"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Number'}">
+                      <dx-text-box
+                            dataField="iPOPad"
+                            [(value)]="iPOPad"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Next Number'}">
+                      <dx-text-box
+                            [(value)]="iPONextNum"
+                            dataField="iPONextNum"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Postfix'}">
+                      <dx-text-box
+                            [(value)]="cPOSuffix"
+                            dataField="cPOSuffix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    
+                    <!-- <dxi-item dataField="Sample" [editorOptions]="{ disabled: true }"></dxi-item> -->
+                    <dxi-item [label]="{text:'Sample'}">
+                      <dx-text-box
+                            [(value)]="cPOSample"
+                            [disabled] ="true"
+                        ></dx-text-box>
+                    </dxi-item>
+                  </dxi-item>
+                  <!-- <dxi-item itemType="group" caption="Options">
+                    <dxi-item>
+                      <div class="dx-field">
+                        <div class="dx-field-label" style="color: rgb(53, 51, 51);">Reset Frequency</div>
+                            <div class="dx-field-value">
+                              <dx-radio-group
+                                  [items]="ResetFrequencyOptions"
+                                  [(value)]="ResetFrequencyOptionsValue"
+                                  layout="horizontal">
+                              </dx-radio-group>
+                            </div>
+                      </div>
+                    </dxi-item>
+                    <dxi-item itemType="group" colCount="2">
+                      <dxi-item dataField="bAutoGeneratePO" [label]="{text:'Automatically Generate PO On Final Approval'}" editorType="dxCheckBox"></dxi-item>
+                      <dxi-item dataField="bPOPrefixMonth" [label]="{text:'PO Number Prefix Month'}" editorType="dxCheckBox"></dxi-item>
+                      <dxi-item dataField="bPOPrefixYear" [label]="{text:'PO Number Prefix Year'}" editorType="dxCheckBox"></dxi-item>
+                      <dxi-item dataField="bEnforceDepartment" [label]="{text:'Enforce Department'}" editorType="dxCheckBox"></dxi-item>
+                      <dxi-item dataField="bEnforceProject" [label]="{text:'Enforce Project'}" editorType="dxCheckBox"></dxi-item>
+                    </dxi-item>
+            
+                  </dxi-item> -->
+                </dxi-tab>
+
+                <dxi-tab title="Requisitions">
+                  <dxi-item itemType="group" colCount="2" caption="Numbering">
+                    <dxi-item [label]="{text:'Prefix'}">
+                      <dx-text-box
+                            dataField="cREQPrefix"
+                            [(value)]="cREQPrefix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Character'}">
+                      <dx-text-box
+                            dataField="cREQPadCharacter"
+                            [(value)]="cREQPadCharacter"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Number'}">
+                      <dx-text-box
+                            dataField="iREQPad"
+                            [(value)]="iREQPad"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Next Number'}">
+                      <dx-text-box
+                            [(value)]="iREQNextNum"
+                            dataField="iREQNextNum"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Postfix'}">
+                      <dx-text-box
+                            [(value)]="cREQSuffix"
+                            dataField="cREQSuffix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                   
+                    <!-- <dxi-item dataField="Sample1" [label]="{text:'Sample'}" [editorOptions]="{ disabled: true }"></dxi-item> -->
+                    <dxi-item [label]="{text:'Sample'}">
+                      <dx-text-box
+                            [(value)]="cReqSample"
+                            [disabled] ="true"
+                        ></dx-text-box>
+                    </dxi-item>
+                    
+                  </dxi-item>
+  
+                  <dxi-item itemType="group" colCount="2" caption="Options">
+                    <dxi-item dataField="bAllowBudgetOverture" [label]="{text:'Ignore Budget Limit'}" editorType="dxCheckBox"></dxi-item>    
+                    <dxi-item dataField="iBudgetIncidentTypeID" [label]="{text:'Budget Override Workflow'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlIncidentTypes, valueExpr:'ID', displayExpr:'cIncidentTypeDescription',closeOnOutsideClick:true, readOnly:disDefBuyer}">
+                    </dxi-item>
+                    <dxi-item dataField="bAllowBackDate" [label]="{text:'Allow Back Date'}" editorType="dxCheckBox"></dxi-item> 
+                    <dxi-item dataField="bAllowAutoRequisition" [label]="{text:'Allow Auto Requisitions when Minimum level is reached'}">
+                      <dx-check-box [(value)]="bAllowAutoRequisition" (onValueChanged)="checkboxAllowAutoReq($event)">
+                      </dx-check-box>
+                    </dxi-item>
+                    <dxi-item dataField="bIgnoreStockValidation" [label]="{text:'Ignore Stock Items Min/Max Levels'}" editorType="dxCheckBox"></dxi-item>
+                    <dxi-item dataField="bAutoArchive" [label]="{text:'Allow Auto Archive'}">
+                      <dx-check-box  (onValueChanged)="checkboxAllowAutoArchive($event)">
+                      </dx-check-box>
+                    </dxi-item>
+                    <dxi-item dataField="iArchiveDays" [label]="{text:'Archive if older than (Days)'}" editorType="dxNumberBox" [editorOptions]="{disabled:disAutoArchive}"></dxi-item>
+                    <dxi-item dataField="fCompetitiveValue" [label]="{text:'Competitive value'}" editorType="dxNumberBox"></dxi-item>
+                    <dxi-item dataField="fCFOBidApprovalAmt" [label]="{text:'Accounting Officer Bid Approval Amount'}" editorType="dxNumberBox"></dxi-item>
+                    <dxi-item dataField="iDefaultBuyerID" [label]="{text:'User to notify'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlDefaultBuyer, valueExpr:'ID', displayExpr:'Username',closeOnOutsideClick:true, readOnly:disDefBuyer}">
+                    </dxi-item>
+                    <dxi-item dataField="iRequisitionTypeID" [label]="{text:'Workflow'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlIncidentTypes, valueExpr:'ID', displayExpr:'cIncidentTypeDescription',closeOnOutsideClick:true,readOnly: readonlyEnabled}">
+                      <dxi-validation-rule type="required" message="Workflow is required">
+                      </dxi-validation-rule>
+                    </dxi-item>
+
+                    <dxi-item dataField="bMandatoryFile" [label]="{text:'Mandatory Attachments'}" editorType="dxCheckBox"></dxi-item>
+                  </dxi-item>
+
+                  <!-- <dxi-item itemType="group" colCount="2" caption="Projects">
+                    <dxi-item dataField="bAutoArchive" [label]="{text:'Force Projects'}">
+                      <dx-check-box [(value)]="bAutoArchiveValue" (onValueChanged)="checkboxForceProjects($event)">
+                      </dx-check-box>
+                    </dxi-item>
+                      <dxi-item>
+                        <div class="dx-field">
+                          <div class="dx-field-label" style="color: rgb(53, 51, 51);">Project Selection</div>
+                              <div class="dx-field-value">
+                                <dx-radio-group
+                                    [disabled]="disProjectTypes"
+                                    [items]="ProjectTypes"
+                                    [(value)]="ProjectTypesValue"
+                                    layout="vertical">
+                                </dx-radio-group>
+                              </div>
+                        </div>
+                      </dxi-item>
+
+                    <dxi-item dataField="bForceProject" [label]="{text:'Force Projects (Only for balance)'}" editorType="dxCheckBox"></dxi-item>
+                  </dxi-item> -->
+
+
+                  <dxi-item itemType="group" colCount="2" caption="Projects">
+                    <dxi-item dataField="bAutoArchive" [label]="{text:'Force Projects'}">
+                      <dx-check-box [(value)]="bForceEnableValue" (onValueChanged)="checkboxForceEnabled($event)">
+                      </dx-check-box>
+                    </dxi-item>
+                    <dxi-item></dxi-item>
+                    <dxi-item>
+                      <div class="dx-field">
+                        <div class="dx-field-label" style="color: rgb(53, 51, 51);">Force Options</div>
+                            <div class="dx-field-value">
+                              <dx-radio-group
+                                  [disabled]="disForceTypes"
+                                  [items]="ForceTypes"
+                                  [(value)]="ForceTypesValue"
+                                  layout="vertical">
+                              </dx-radio-group>
+                            </div>
+                      </div>
+                    </dxi-item>
+                      <dxi-item>
+                        <div class="dx-field">
+                          <div class="dx-field-label" style="color: rgb(53, 51, 51);">Project Selection</div>
+                              <div class="dx-field-value">
+                                <dx-radio-group
+                                    [disabled]="disProjectTypes"
+                                    [items]="ProjectTypes"
+                                    [(value)]="ProjectTypesValue"
+                                    layout="vertical">
+                                </dx-radio-group>
+                              </div>
+                        </div>
+                      </dxi-item>
+
+                    <!-- <dxi-item dataField="bForceProject" [label]="{text:'Force Projects (Only for balance)'}" editorType="dxCheckBox"></dxi-item> -->
+                  </dxi-item>
+
+                  <dxi-item itemType="group" caption="Resubmission/Rejection Settings">
+                    <dx-data-grid [dataSource]="datasource" height="30vh" [columnAutoWidth]="true" [showColumnLines]="false"
+                    (onToolbarPreparing)="onToolbarPreparing($event)" [(selectedRowKeys)]="selectedRecords"
+                    [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false">
+                    <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel>
+                          <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                          <dxi-column caption="ID" dataField="ID" [visible]="false"></dxi-column>
+                          <dxi-column caption="Event ID" dataField="iEventID" [visible]="false"></dxi-column>
+                          <dxi-column caption="iResubmissionTypeID" dataField="iResubmissionTypeID" [visible]="false"></dxi-column>
+                          <dxi-column caption="iRejectionTypeID" dataField="iRejectionTypeID" [visible]="false"></dxi-column>
+                          <dxi-column caption="iCreatedUserID" dataField="iCreatedUserID" [visible]="false"></dxi-column>
+                          <dxi-column caption="Event Code" dataField="cCode"></dxi-column>
+                          <dxi-column caption="Event Description" dataField="cDescription"></dxi-column>
+                          <dxi-column caption="Date Created" dataField="dDateCreated" dataType="date" format="dd/MM/yyyy" [visible]="false"></dxi-column>
+                          <dxi-column caption="User Display Name" dataField="cDisplayName" [visible]="false"></dxi-column>
+                          <dxi-column caption="Resubmission Type" dataField="cResubmissionType"></dxi-column>
+                          <dxi-column caption="Applies To Budget (Resubmission)" dataField="bBudgetResubmit"></dxi-column>
+                          <dxi-column caption="Rejection Type" dataField="cRejectionType"></dxi-column>
+                          <dxi-column caption="Applies To Budget (Reject)" dataField="bBudgetRejection"></dxi-column>
+                          <dxo-filter-row [visible]="true"></dxo-filter-row>
+                          <dxo-selection mode="single"></dxo-selection>
+                          <dxo-export [enabled]="true" fileName="Rebusmission_Settings"></dxo-export>
+                          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20,50, 100]" [showInfo]="false">
+                          </dxo-pager>
+                    </dx-data-grid>
+                  </dxi-item>
+                </dxi-tab>   
+
+                <dxi-tab title="Request for Quotation">
+                  <dxi-item itemType="group" colCount="2" caption="Numbering">
+                    <dxi-item [label]="{text:'Prefix'}">
+                      <dx-text-box
+                            dataField="cRFQPrefix"
+                            [(value)]="cRFQPrefix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Character'}">
+                      <dx-text-box
+                            dataField="cRFQPadCharacter"
+                            [(value)]="cRFQPadCharacter"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Number'}">
+                      <dx-text-box
+                            dataField="iRFQPad"
+                            [(value)]="iRFQPad"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Next Number'}">
+                      <dx-text-box
+                            [(value)]="iRFQNextNum"
+                            dataField="iRFQNextNum"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Postfix'}">
+                      <dx-text-box
+                            [(value)]="cRFQSuffix"
+                            dataField="cRFQSuffix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                   
+                    <!-- <dxi-item dataField="SampleRFQ" [label]="{text:'Sample'}" [editorOptions]="{ disabled: true }"></dxi-item> -->
+                    <dxi-item [label]="{text:'Sample'}">
+                      <dx-text-box
+                            [(value)]="cRFQSample"
+                            [disabled] ="true"
+                        ></dx-text-box>
+                    </dxi-item>
+                    
+                  </dxi-item>
+                  <dxi-item itemType="group" colCount="2" caption="Options">
+                    <!-- <dxi-item dataField="iRFQPublishWorkflowID" [label]="{text:'WorkFlows'}" editorType="dxLookup"
+                        [editorOptions]="{dataSource: ddlWorkflows, valueExpr:'ID', displayExpr:'cWorkflowName',closeOnOutsideClick:true,readOnly:lblReadOnly}">
+                        <dxi-validation-rule type="required" message="WorkFlows is required">
+                        </dxi-validation-rule>
+                      </dxi-item><dxi-item></dxi-item> -->
+                      
+                    <dxi-item dataField="bConcealQuotePrice" [label]="{text:'Conceal Quote Price'}" editorType="dxCheckBox"></dxi-item>
+                    <dxi-item dataField="bAutoSelectSuppliers" [label]="{text:'Automatically select suppliers'}" editorType="dxCheckBox"></dxi-item>
+                    
+                      <!-- <dxi-item [label]="{text:'Use Workflow For Publishing RFQ'}">
+                        <dx-check-box [(value)]="checkBoxValue" (onValueChanged)="bWorkflowvalueChanged($event)"></dx-check-box>
+                      </dxi-item> -->
+
+                      <dxi-item [label]="{text:'Allow No. Of Supplier Override'}">
+                        <dx-check-box  (onValueChanged)="bAllowOverridevalueChanged($event)"></dx-check-box>
+                      </dxi-item>
+  
+                      <!-- <dxi-item>
+                        <div class="dx-field">
+                          <div class="dx-field-label" style="color: rgb(53, 51, 51);">Supplier Option</div>
+                              <div class="dx-field-value">
+                                <dx-radio-group
+                                    [items]="SupplierOptions"
+                                    [(value)]="SupplierOptionsValue"
+                                    layout="horizontal">
+                                </dx-radio-group>
+                              </div>
+                        </div>
+                      </dxi-item> -->
+                      <dxi-item dataField="iComplianceDays" [label]="{text:'Set Compliance Days'}" editorType="dxNumberBox"></dxi-item>
+                      <dxi-item [label]="{text:'Set RFQ Closing Date'}">
+                        <dx-check-box (onValueChanged)="checkboxRFQClosingDate($event)">
+                        </dx-check-box>
+                      </dxi-item>
+
+                      <dxi-item dataField="iRFQClosingDateDays" [label]="{text:'Number of Days'}" editorType="dxNumberBox" [editorOptions]="{readOnly:lblReadOnlyNoDays}">
+                      </dxi-item>
+                      
+                      <!-- <dxi-item dataField="iNumberOfRFQBidders" [label]="{text:'Number Of RFQ Bidders'}" editorType="dxNumberBox"></dxi-item><dxi-item></dxi-item> -->
+                      <dxi-item dataField="bChangeProcMethod" [label]="{text:'Enable change in procurement method'}" editorType="dxCheckBox"></dxi-item>
+                  </dxi-item>
+                  <dxi-item itemType="group" caption="Email">
+                    <dxi-item dataField="cRFQReplyToEmail" [label]="{text:'Reply Email Address'}"></dxi-item>
+                    <dxi-item>
+                      <dx-html-editor height="250px" [(value)]="editorValue">
+                        <dxo-toolbar>
+                          <dxi-item formatName="undo"></dxi-item>
+                          <dxi-item formatName="redo"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+                          <dxi-item formatName="font"
+                            [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']">
+                          </dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="bold"></dxi-item>
+                          <dxi-item formatName="italic"></dxi-item>
+                          <dxi-item formatName="strike"></dxi-item>
+                          <dxi-item formatName="underline"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="alignLeft"></dxi-item>
+                          <dxi-item formatName="alignCenter"></dxi-item>
+                          <dxi-item formatName="alignRight"></dxi-item>
+                          <dxi-item formatName="alignJustify"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="orderedList"></dxi-item>
+                          <dxi-item formatName="bulletList"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="color"></dxi-item>
+                          <dxi-item formatName="background"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="link"></dxi-item>
+                          <dxi-item formatName="image"></dxi-item>
+                          <dxi-item formatName="separator"></dxi-item>
+                          <dxi-item formatName="clear"></dxi-item>
+                          <dxi-item formatName="codeBlock"></dxi-item>
+                          <dxi-item formatName="blockquote"></dxi-item>
+                        </dxo-toolbar>
+                        <dxo-media-resizing [enabled]=true>
+                        </dxo-media-resizing>
+                      </dx-html-editor>
+                    </dxi-item>
+                  </dxi-item>
+                </dxi-tab>
+
+                <dxi-tab title="Deviations">
+                  <dxi-item itemType="group" colCount="2" caption="Numbering">
+                    <dxi-item [label]="{text:'Prefix'}">
+                      <dx-text-box
+                            dataField="cDevPrefix"
+                            [(value)]="cDevPrefix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Character'}">
+                      <dx-text-box
+                            dataField="cDevPadCharacter"
+                            [(value)]="cDevPadCharacter"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Number'}">
+                      <dx-text-box
+                            dataField="iDevPad"
+                            [(value)]="iDevPad"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Next Number'}">
+                      <dx-text-box
+                            [(value)]="iDevNextNum"
+                            dataField="iDevNextNum"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Postfix'}">
+                      <dx-text-box
+                            [(value)]="cDevSuffix"
+                            dataField="cDevSuffix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                   
+                    <!-- <dxi-item dataField="SampleDev" [label]="{text:'Sample'}" [editorOptions]="{ disabled: true }"></dxi-item> -->
+                    <dxi-item [label]="{text:'Sample'}">
+                      <dx-text-box
+                            [(value)]="cDevSample"
+                            [disabled] ="true"
+                        ></dx-text-box>
+                    </dxi-item>
+                    
+                    
+                  </dxi-item>
+                </dxi-tab>
+
+                <dxi-tab title="Tenders">
+                  <dxi-item itemType="group" colCount="2" caption="Numbering">
+                    <dxi-item [label]="{text:'Prefix'}">
+                      <dx-text-box
+                            dataField="cTendPrefix"
+                            [(value)]="cTendPrefix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Character'}">
+                      <dx-text-box
+                            dataField="cTendPadCharacter"
+                            [(value)]="cTendPadCharacter"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Padding Number'}">
+                      <dx-text-box
+                            dataField="iTendPad"
+                            [(value)]="iTendPad"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Next Number'}">
+                      <dx-text-box
+                            [(value)]="iTendNextNum"
+                            dataField="iTendNextNum"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                    <dxi-item [label]="{text:'Postfix'}">
+                      <dx-text-box
+                            [(value)]="cTendSuffix"
+                            dataField="cTendSuffix"
+                            [showClearButton]="true"
+                            valueChangeEvent="keyup"
+                            [hoverStateEnabled]="false"
+                            (onValueChanged)="onValueChanged($event)"
+                        ></dx-text-box>
+                    </dxi-item>
+                   
+                    <!-- <dxi-item dataField="SampleTend" [label]="{text:'Sample'}" [editorOptions]="{ disabled: true }"></dxi-item> -->
+                    <dxi-item [label]="{text:'Sample'}">
+                      <dx-text-box
+                            [(value)]="cTenderSample"
+                            [disabled] ="true"
+                        ></dx-text-box>
+                    </dxi-item>
+                    
+                  </dxi-item>
+  
+                  <dxi-item itemType="group" colCount="2" caption="Options">
+                    <dxi-item dataField="iMinBidMembers" [label]="{text:'Minimum Bid Members'}" editorType="dxNumberBox"></dxi-item>
+                    <dxi-item dataField="iMaxBidMembers" [label]="{text:'Maximum Bid Members'}" editorType="dxNumberBox"></dxi-item>
+                    <dxi-item [label]="{text:'Enable Auto Invalid Tenders'}">
+                        <dx-check-box (onValueChanged)="bSetInvalidvalueChanged($event)"></dx-check-box>
+                    </dxi-item>
+                    <dxi-item dataField="iTenderClosingDateDays" [label]="{text:'Number of days'}" editorType="dxNumberBox"
+                      [editorOptions]="{disabled:disiNoInvalidDays}">
+                    </dxi-item>
+                    <dxi-item dataField="iTenderCFOID" [label]="{text:'CFO'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlDefaultBuyer, valueExpr:'iAgentID', displayExpr:'Username',closeOnOutsideClick:true}">
+                    </dxi-item>
+                    <dxi-item dataField="iTenderObjectionDays" [label]="{text:'Objection Time Frame (Days)'}" editorType="dxNumberBox"></dxi-item>
+                    <dxi-item dataField="iEnquiryUserID" [label]="{text:'Enquiry User'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlDefaultBuyer, valueExpr:'iAgentID', displayExpr:'Username',closeOnOutsideClick:true}">
+                    </dxi-item>
+                    <dxi-item dataField="iContractsSpecialistID" [label]="{text:'Specialist'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlDefaultBuyer, valueExpr:'iAgentID', displayExpr:'Username',closeOnOutsideClick:true}">
+                    </dxi-item>
+                    <dxi-item dataField="bDefaultContractValue" [label]="{text:'Default value for creating a contract'}" editorType="dxCheckBox"></dxi-item>
+                  </dxi-item>
+
+                  <dxi-item itemType="group" colCount="2" caption="Mini Tender">
+                    <dxi-item dataField="iSCMHeadID" [label]="{text:'SCM Manager'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlDefaultBuyer, valueExpr:'iAgentID', displayExpr:'Username',closeOnOutsideClick:true}">
+                    </dxi-item>
+                    <dxi-item dataField="iContactUserID" [label]="{text:'Contact User'}" editorType="dxLookup"
+                      [editorOptions]="{dataSource: ddlDefaultBuyer, valueExpr:'iAgentID', displayExpr:'Username',closeOnOutsideClick:true}">
+                    </dxi-item>
+                  </dxi-item>
+
+                  <dxi-item itemType="group" caption="Emails">
+                    <div class="row">
+                      <div class="col">
+                        <dx-form>
+                          <dxi-item itemType="group">
+                            <dxi-item widget="dxButton" [label]="{text:'Invitation Email'}" style="padding-bottom: 15px;">
+                              <dx-button (click)="EditInvitationEmail()" type="default" icon="preferences" width="150" height="25" text="Modify">
+                              </dx-button>
+                            </dxi-item>
+                          </dxi-item>
+                        </dx-form>
+                      </div>
+                      <div class="col">
+                        <dx-form>
+                          <dxi-item itemType="group">
+                            <dxi-item widget="dxButton" [label]="{text:'Alert Email'}" style="padding-bottom: 15px;">
+                              <dx-button (click)="EditAlertEmail()" type="default" icon="preferences" width="150" height="25" text="Modify">
+                              </dx-button>
+                            </dxi-item>
+                          </dxi-item>
+                        </dx-form>
+                      </div>
+                    </div>
+                  </dxi-item>
+                </dxi-tab>
+                <dxi-tab title="Email Setup">
+                  <dxi-item itemType="group" colCount="2" caption="Mail Settings">
+                    <dxi-item dataField="cFromEmail" [label]="{text:'From Email'}"></dxi-item> 
+                    <dxi-item dataField="cSMTPServer" [label]="{text:'SMTP Server'}"></dxi-item>
+                    <dxi-item dataField="iPortNumber" [label]="{text:'Port Number'}"></dxi-item>
+                    <dxi-item></dxi-item>
+                    <dxi-item dataField="cEmailUserName" [label]="{text:'User Name'}"></dxi-item>
+                    <dxi-item [label]="{text:'Password'}" >
+                      <dx-text-box
+                              mode="password"
+                              [(value)]="vPass"
+                              placeholder="Enter password"
+                              [showClearButton]="true"
+                          ></dx-text-box>
+                  </dxi-item>
+                    <!-- <dxi-item dataField="cEmailPassword" [label]="{text:'Password'}"></dxi-item> -->
+                  </dxi-item>
+                </dxi-tab>
+              </dxi-item>
+            </dx-form>
+            <dx-form style="padding-top: 10px;">
+              <dxi-item itemType="group" colCount="6" >
+                <dxi-item widget="dxButton" locateInMenu="left" location="before">
+                  <dx-button (click)="ApplyClick()" type="default" icon="check" width="200" height="25" text="Apply Settings">
+                  </dx-button>
+                </dxi-item>
+              </dxi-item>
+            </dx-form>
+          </dxi-item>
+       
+      </dx-tab-panel>
+    </dxi-item>
+  </dx-form>
+</div>
+
+<dx-popup width="650" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+  [(visible)]="isInvitationEmailPopupVisible" title="Attendance Invitation Email">
+  <div style="padding:5px">
+      <dx-html-editor height="250px" [(value)]="editorCommitteValue">
+        <dxo-toolbar>
+          <dxi-item formatName="undo"></dxi-item>
+          <dxi-item formatName="redo"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+          <dxi-item formatName="font"
+            [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']">
+          </dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="bold"></dxi-item>
+          <dxi-item formatName="italic"></dxi-item>
+          <dxi-item formatName="strike"></dxi-item>
+          <dxi-item formatName="underline"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="alignLeft"></dxi-item>
+          <dxi-item formatName="alignCenter"></dxi-item>
+          <dxi-item formatName="alignRight"></dxi-item>
+          <dxi-item formatName="alignJustify"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="orderedList"></dxi-item>
+          <dxi-item formatName="bulletList"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="color"></dxi-item>
+          <dxi-item formatName="background"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="link"></dxi-item>
+          <dxi-item formatName="image"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="clear"></dxi-item>
+          <dxi-item formatName="codeBlock"></dxi-item>
+          <dxi-item formatName="blockquote"></dxi-item>
+        </dxo-toolbar>
+        <dxo-media-resizing [enabled]=true>
+        </dxo-media-resizing>
+      </dx-html-editor>
+    <hr style="border-top: 1px solid #ccc; background: transparent;">
+    <dx-toolbar style="margin-top:5px">
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="EmailInvitationOkayClick()" type="default" icon="check" width="150" height="25" text="Done">
+        </dx-button>
+      </dxi-item>
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="EmailInvitationCloseClick()" type="default" icon="close" width="150" height="25" text="Close">
+        </dx-button>
+      </dxi-item>
+    </dx-toolbar>
+  </div>
+</dx-popup>
+
+<dx-popup width="650" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+  [(visible)]="isAlertEmailPopupVisible" title="Evaluation Alert Email">
+  <div style="padding:5px">
+      <dx-html-editor height="250px" width="auto" [(value)]="editorAlertCommitteValue" EnablePasteOptions="true">
+        <dxo-toolbar>
+          <dxi-item formatName="undo"></dxi-item>
+          <dxi-item formatName="redo"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
+          <dxi-item formatName="font"
+            [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']">
+          </dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="bold"></dxi-item>
+          <dxi-item formatName="italic"></dxi-item>
+          <dxi-item formatName="strike"></dxi-item>
+          <dxi-item formatName="underline"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="alignLeft"></dxi-item>
+          <dxi-item formatName="alignCenter"></dxi-item>
+          <dxi-item formatName="alignRight"></dxi-item>
+          <dxi-item formatName="alignJustify"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="orderedList"></dxi-item>
+          <dxi-item formatName="bulletList"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="color"></dxi-item>
+          <dxi-item formatName="background"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="link"></dxi-item>
+          <dxi-item formatName="image"></dxi-item>
+          <dxi-item formatName="separator"></dxi-item>
+          <dxi-item formatName="clear"></dxi-item>
+          <dxi-item formatName="codeBlock"></dxi-item>
+          <dxi-item formatName="blockquote"></dxi-item>
+        </dxo-toolbar>
+        <dxo-media-resizing [enabled]=true>
+        </dxo-media-resizing>
+      </dx-html-editor>
+    <hr style="border-top: 1px solid #ccc; background: transparent;">
+    <dx-toolbar style="margin-top:5px">
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="EmailAlertOkayClick()" type="default" icon="check" width="150" height="25" text="Done">
+        </dx-button>
+      </dxi-item>
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="EmailAlertCloseClick()" type="default" icon="close" width="150" height="25" text="Close">
+        </dx-button>
+      </dxi-item>
+    </dx-toolbar>
+  </div>
+</dx-popup>
+
+<dx-popup width="750" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+  [(visible)]="isNewResbumitSettingsPopupVisible" title="Resubmit/Reject Settings">
+  <div style="padding:5px">
+    <dx-form labelLocation="left" [formData]="newResbmitSettingRecord">
+      <dxi-item [label]="{text:'Apply setting for all events'}">
+        <dx-check-box (onValueChanged)="AlleventsChanged($event)"></dx-check-box>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Select Event">
+        <dxi-item dataField="iEventID" [label]="{text:'Event'}" editorType="dxLookup" [editorOptions]="{dataSource: ddlEvents, valueExpr:'ID', displayExpr:'cCode',closeOnOutsideClick:true,disabled:disEvent}">
+          <dxi-validation-rule type="required" message="Event is required">
+          </dxi-validation-rule>
+        </dxi-item> 
+      </dxi-item>
+
+      <dxi-item itemType="group" caption="On Resubmission" colCount="2">
+        <dxi-item dataField="iResubmissionTypeID" [label]="{text:'Resubmission Type'}" editorType="dxLookup" [editorOptions]="{dataSource: ddlOnResubmit, valueExpr:'value', displayExpr:'name',closeOnOutsideClick:true}">
+        </dxi-item>
+        <dxi-item dataField="bBudgetResubmit" [label]="{text:'Apply only if reason is Budget'}" editorType="dxCheckBox"></dxi-item>
+      </dxi-item>
+
+      <dxi-item itemType="group" caption="On Rejection" colCount="2">
+        <dxi-item dataField="iRejectionTypeID" [label]="{text:'Rejection Type'}" editorType="dxLookup" [editorOptions]="{dataSource: ddlOnReject, valueExpr:'value', displayExpr:'name',closeOnOutsideClick:true}">
+        </dxi-item>
+        <dxi-item dataField="bBudgetRejection" [label]="{text:'Apply only if reason is Budget'}" editorType="dxCheckBox"></dxi-item>
+      </dxi-item>
+    </dx-form>
+  
+    <hr style="border-top: 1px solid #ccc; background: transparent;">
+    <dx-toolbar style="margin-top:5px">
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="resubmitSaveClick()" type="default" icon="save" width="150" height="25" text="Save">
+        </dx-button>
+      </dxi-item>
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="resubmitCloseClick()" type="default" icon="close" width="150" height="25" text="Close">
+        </dx-button>
+      </dxi-item>
+    </dx-toolbar>
+  </div>
+</dx-popup>
+
+<app-message-dialog></app-message-dialog>
+<app-confirm-dialog (confirmClick)= 'ConfirmYesClick()'></app-confirm-dialog>
+
+<dx-load-panel
+    [(visible)]="loadingVisible"
+    [showIndicator]="true"
+    [showPane]="true"
+    shadingColor="rgba(43,67,50,0.4)"
+    [shading]="true">
+</dx-load-panel>

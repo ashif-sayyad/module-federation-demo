@@ -1,0 +1,11 @@
+
+    <dx-data-grid [columnAutoWidth]="true" [showColumnLines]="false" [rowAlternationEnabled]="false" [showColumnHeaders]="false"
+      [wordWrapEnabled]="true" [showBorders]="false" [dataSource]="RequestLog" height="18vh">
+      <dxi-column caption="ID" dataField="iRequestLogID" [visible]="false"></dxi-column>
+      <dxi-column caption="Action Date" dataField="dActionDate" dataType="datetime"></dxi-column>
+      <dxi-column caption="Action" dataField="CurrentStatus"></dxi-column>
+      <dxi-column caption="Action Description" dataField="cDescription"></dxi-column>
+      <dxi-column caption="Reference" dataField="cLineReference"></dxi-column>
+      <dxi-column caption="User" dataField="currentAgent"></dxi-column>
+      <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20,50, 100]" [showInfo]="false"></dxo-pager>
+    </dx-data-grid>

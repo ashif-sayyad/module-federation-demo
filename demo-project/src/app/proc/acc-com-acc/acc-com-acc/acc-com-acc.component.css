@@ -1,0 +1,16 @@
+::ng-deep .container {
+    position: relative;
+}
+
+::ng-deep .left-contents {
+    width: 56%;
+    padding: 0 10px 10px;
+}
+
+::ng-deep .right-contents {
+    position: absolute;
+    right: 0;
+    left: 56%;
+    top: 20px;
+    padding-right: 20px;
+}

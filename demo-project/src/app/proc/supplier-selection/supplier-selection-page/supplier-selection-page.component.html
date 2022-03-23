@@ -1,0 +1,102 @@
+<dx-popup width="1300" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+  [(visible)]="isSupplierSelectionPopupVisible" [showTitle]="false">
+  <div style="padding:0">
+    <dx-form labelLocation="left">
+      <dxi-item itemType="group">
+            <div class="left-contents">
+              <dx-data-grid [dataSource]="datasourceRFQCommodities" height="54vh" [columnAutoWidth]="true" [showColumnLines]="false"
+                [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false"
+                (onToolbarPreparing)="onToolbarPreparingCommodities($event)"
+                (onRowClick)="filterSuppliersLinked($event)">
+                <!-- <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel> -->
+                <dxi-column caption="iCommodityID" dataField="iCommodityID" [visible]="false"></dxi-column>
+                <dxi-column caption="Commodity" dataField="cCommodityName"></dxi-column>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-selection mode="single"></dxo-selection>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10]" [showInfo]="false">
+                </dxo-pager>
+              </dx-data-grid>
+            </div>
+            <div class="right-contents">
+              <dx-data-grid [dataSource]="datasourceSuppliersLinked" height="54vh" [columnAutoWidth]="true" [showColumnLines]="false"
+                [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false"
+                (onToolbarPreparing)="onToolbarPreparing($event)" [(selectedRowKeys)]="selectedSuppLinkRecords"
+                >
+                  <!-- <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel> -->
+                <dxi-column caption="ID" dataField="ID" [visible]="false"></dxi-column>
+                <dxi-column caption="Account" dataField="cAccount"></dxi-column>
+                <dxi-column caption="Supplier" dataField="cName"></dxi-column>
+                <dxi-column caption="Telephone" dataField="cTelephone" [visible]="false"></dxi-column>
+                <dxi-column caption="Contact Person" dataField="cContactPerson" [visible]="false"></dxi-column>
+                <dxi-column caption="Email" dataField="cEmail" [visible]="false"></dxi-column>
+                <dxi-column caption="BEE Compliant" dataField="bBEECompliant" [visible]="false"></dxi-column>
+                <dxi-column caption="BEE CertValid" dataField="bBEECertValid" [visible]="false"></dxi-column>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-selection mode="single"></dxo-selection>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10]" [showInfo]="false">
+                </dxo-pager>
+              </dx-data-grid>
+            </div>
+      </dxi-item>
+    </dx-form>
+    <hr style="border-top: 1px solid #ccc; background: transparent;">
+      <dx-toolbar style="margin-top:5px">
+        <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+          <dx-button (click)="BackMainClick()" type="default" icon="home" width="150" height="25" text="Back">
+          </dx-button>
+        </dxi-item>
+        <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+          <dx-button (click)="DoneClick()" type="default" icon="check" width="150" height="25" text="Done">
+          </dx-button>
+        </dxi-item>
+      </dx-toolbar>
+  </div>
+</dx-popup>
+
+<dx-popup width="auto" height="auto" overflow="auto" [dragEnabled]="true" [resizeEnabled]="true" maxWidth="90%"
+  [(visible)]="isSuppliersPopupVisible" title="Link Suppliers" [showTitle]="false">
+  <div style="padding:5px">
+    <dx-form labelLocation="left">
+      <dxi-item itemType="group" caption="Link Suppliers">
+        <dx-data-grid [dataSource]="datasourceSuppliers" height="50vh" [columnAutoWidth]="true" [showColumnLines]="false"
+        [(selectedRowKeys)]="selectedSupplierRecords"
+        [rowAlternationEnabled]="true" [wordWrapEnabled]="true" [showBorders]="false">
+        <dxo-search-panel [visible]="true" [width]="150"></dxo-search-panel>
+              <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+              <dxo-selection mode="multiple"></dxo-selection>
+              <dxo-sorting mode="multiple"></dxo-sorting>
+              <dxi-column caption="ID" dataField="ID" [visible]="false"></dxi-column>
+              <dxi-column caption="Account" dataField="cAccount"></dxi-column>
+              <dxi-column caption="Supplier" dataField="cName"></dxi-column>
+              <dxi-column caption="Telephone" dataField="cTelephone"></dxi-column>
+              <dxi-column caption="Contact Person" dataField="cContactPerson"></dxi-column>
+              <dxi-column caption="Email" dataField="cEmail"></dxi-column>
+              <dxi-column caption="BEE Compliant" dataField="bBEECompliant"></dxi-column>
+              <dxi-column caption="BEE CertValid" dataField="bBEECertValid"></dxi-column>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-selection mode="multiple"></dxo-selection>
+              <!-- <dxo-export [enabled]="true" fileName="Suppliers"></dxo-export> -->
+              <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20,50, 100]" [showInfo]="false">
+              </dxo-pager>
+        </dx-data-grid>
+      </dxi-item>
+    </dx-form>
+    <hr style="border-top: 1px solid #ccc; background: transparent;">
+    <dx-toolbar style="margin-top:5px">
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="SuppliersAddClick()" type="default" icon="plus" width="150" height="25" text="Assign">
+        </dx-button>
+      </dxi-item>
+      <dxi-item widget="dxButton" locateInMenu="auto" location="after">
+        <dx-button (click)="SuppliersCloseClick()" type="default" icon="close" width="150" height="25" text="Close">
+        </dx-button>
+      </dxi-item>
+    </dx-toolbar>
+  </div>
+</dx-popup>
+
+<app-message-dialog></app-message-dialog>
+
+<dx-load-panel [(visible)]="loadingVisible" [showIndicator]="true" [showPane]="true" shadingColor="rgba(43,67,50,0.4)"
+  [shading]="true">
+</dx-load-panel>
